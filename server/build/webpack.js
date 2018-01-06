@@ -242,7 +242,6 @@ export default async function createCompiler (dir, { buildId, dev = false, quiet
           return { content, sourceMap }
         }
 
-        const babelRuntimePath = require.resolve('babel-runtime/package').replace(/[\\/]package\.json$/, '')
         const transpiled = babelCore.transform(content, {
           babelrc: false,
           sourceMaps: dev ? 'both' : false,
@@ -258,7 +257,7 @@ export default async function createCompiler (dir, { buildId, dev = false, quiet
               require.resolve('babel-plugin-module-resolver'),
               {
                 alias: {
-                  'babel-runtime': babelRuntimePath,
+                  'babel-runtime': relativeResolve('babel-runtime/package'),
                   'next/link': relativeResolve('../../lib/link'),
                   'next/prefetch': relativeResolve('../../lib/prefetch'),
                   'next/css': relativeResolve('../../lib/css'),
